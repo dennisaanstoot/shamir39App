@@ -345,6 +345,7 @@ class Shamir {
                 str += padLeft(arr[i].toString(2), size)
                 i++
             }
+            // TODO: fix error, startIndex cannot be a negative value
             str = str.substring(-bits)
             if (str.all { c -> c == '0' }) { // all zeros?
                 return null
@@ -680,7 +681,7 @@ class Shamir {
     // Pads a string `str` with zeros on the left so that its length is a multiple of `bits`
     fun padLeft(str: String, bits: Int?): String {
         val newBits = (bits ?: Config.bits)!!
-//        // possible fix for divide by zero error.
+//        // TODO: possible fix for divide by zero error.
 //        if (newBits == 0)
 //            return str;
         val missing = str.length % newBits
