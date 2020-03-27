@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var root : View
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -23,20 +25,24 @@ class DashboardFragment : Fragment() {
     ): View? {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_dashboard)
+        this.root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+//        val textView: TextView = this.root.findViewById(R.id.text_dashboard)
 //        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
 
         // bind calculate_parts() method to button click event
-        val calculatePartsButton : Button = root.findViewById(R.id.calculate_parts_button)
+        val calculatePartsButton : Button = this.root.findViewById(R.id.calculate_parts_button)
         calculatePartsButton.setOnClickListener { calculate_parts() }
-        return root
+
+
+        return this.root
     }
 
     // calculate Shamir parts based on seed
     private fun calculate_parts() {
         println("Calculate parts");
+        val seedText : EditText = this.root.findViewById(R.id.seedText);
+        println(seedText.text)
     }
 }
