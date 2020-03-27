@@ -680,6 +680,9 @@ class Shamir {
     // Pads a string `str` with zeros on the left so that its length is a multiple of `bits`
     fun padLeft(str: String, bits: Int?): String {
         val newBits = (bits ?: Config.bits)!!
+//        // possible fix for divide by zero error.
+//        if (newBits == 0)
+//            return str;
         val missing = str.length % newBits
         return (if (missing != 0) (0 until (newBits - missing + 1)).map { i -> "0" }
             .joinToString(separator = "") else "") + str
