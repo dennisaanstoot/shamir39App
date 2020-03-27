@@ -307,8 +307,14 @@ class Shamir {
         // Construct the exp and log tables for multiplication.
         val logs = ArrayList<Int>()
         val exps = ArrayList<Int>()
+        // ensure proper size of  arraylists, otherwise setting values with array[x]=v will throw indexoutofbounds exceptions
+        for (i in 0 until Config.size!!) {
+            exps.add(0)
+            logs.add(0)
+        }
         var x = 1
         val primitive = Defaults.primitivePolynomials[Config.bits!!]!!
+
         for (i in 0 until Config.size!!) {
             exps[i] = x
             logs[x] = i
