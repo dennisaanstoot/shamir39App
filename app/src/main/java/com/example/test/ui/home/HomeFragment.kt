@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
     }
 
     fun onClick(view: View) {
+
         // example to be verified by https://iancoleman.io/shamir39/#english
 //        var bip39: List<String> = listOf("seek", "deposit", "organ", "vintage", "absurd", "daughter", "trip", "rabbit", "simple", "father", "effort", "welcome", "fashion", "bike", "venture")
 

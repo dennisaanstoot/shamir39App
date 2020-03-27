@@ -5,4 +5,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="submit">Submit</string>
     <string name="original">Original</string>
+    <string name="calculate_parts">Calculate parts</string>
+    <string name="bip39_mnemonic_seed">BIP39 mnemonic seed</string>
 </resources>
