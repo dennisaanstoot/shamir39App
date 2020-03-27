@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">test</string>
+    <string name="app_name">BIP39 Shamir secret sharing</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Split seed</string>
     <string name="title_notifications">Combine parts</string>
