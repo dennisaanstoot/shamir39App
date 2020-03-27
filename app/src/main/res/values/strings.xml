@@ -7,4 +7,5 @@
     <string name="original">Original</string>
     <string name="calculate_parts">Calculate parts</string>
     <string name="bip39_mnemonic_seed">BIP39 mnemonic seed</string>
+    <string name="shamir_parts_multiline">Shamir\'s secret parts (one part per line)</string>
 </resources>
