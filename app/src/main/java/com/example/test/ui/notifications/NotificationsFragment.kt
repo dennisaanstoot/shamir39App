@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,6 +27,17 @@ class NotificationsFragment : Fragment() {
 //        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
+
+        // bind calculate_seeds() method to button click event
+        val calculateSeedButton : Button = root.findViewById(R.id.calculate_seed_button)
+        calculateSeedButton.setOnClickListener { calculate_seed() }
+
         return root
     }
+
+    // calculate BIP39 mnemonic seed based on Shamir parts
+    private fun calculate_seed() {
+        println("Calculate seed");
+    }
+
 }

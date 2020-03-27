@@ -35,5 +35,6 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/calculate_seed" />
+        android:text="@string/calculate_seed"
+        android:id="@+id/calculate_seed_button"  />
 </LinearLayout>

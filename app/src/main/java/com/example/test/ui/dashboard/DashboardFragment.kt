@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.test.R
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
@@ -26,6 +28,15 @@ class DashboardFragment : Fragment() {
 //        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
+
+        // bind calculate_parts() method to button click event
+        val calculatePartsButton : Button = root.findViewById(R.id.calculate_parts_button)
+        calculatePartsButton.setOnClickListener { calculate_parts() }
         return root
+    }
+
+    // calculate Shamir parts based on seed
+    private fun calculate_parts() {
+        println("Calculate parts");
     }
 }
