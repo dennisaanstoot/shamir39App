@@ -33,6 +33,11 @@
         android:importantForAutofill="no" />
 
     <!-- TODO: Add spinner (possibly in horizontal linearLayout) to pick threshold and number of radix values -->
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_number_parts" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

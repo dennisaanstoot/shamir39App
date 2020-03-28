@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,6 +16,8 @@ class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var root : View
+
+    private val defaultPartsNumberValue: String = "5";
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -36,6 +36,18 @@ class DashboardFragment : Fragment() {
         val calculatePartsButton : Button = this.root.findViewById(R.id.calculate_parts_button)
         calculatePartsButton.setOnClickListener { calculate_parts() }
 
+        // dropdown spinner
+        val numberPartsSpinner : Spinner = this.root.findViewById(R.id.spinner_number_parts)
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            this.activity!!,
+            R.array.parts_number_selection,
+            android.R.layout.simple_spinner_dropdown_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            numberPartsSpinner.adapter = adapter
+        }
+        // set default value
+        numberPartsSpinner.setSelection(spinnerAdapter.getPosition(this.defaultPartsNumberValue))
 
         return this.root
     }
