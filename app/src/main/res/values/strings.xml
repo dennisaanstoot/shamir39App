@@ -10,7 +10,20 @@
     <string name="shamir_parts_multiline">Shamir\'s secret parts (one part per line)</string>
     <string name="calculate_seed">Calculate seed</string>
     <string name="total_parts_description">Number of parts to create</string>
+    <string name="reconstruct_parts_description">Parts necessary to reconstruct</string>
     <string-array name="parts_number_selection">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="reconstruct_parts_number_selection">
+        <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
