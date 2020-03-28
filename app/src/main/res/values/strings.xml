@@ -9,6 +9,7 @@
     <string name="bip39_mnemonic_seed">BIP39 mnemonic seed</string>
     <string name="shamir_parts_multiline">Shamir\'s secret parts (one part per line)</string>
     <string name="calculate_seed">Calculate seed</string>
+    <string name="total_parts_description">Number of parts to create</string>
     <string-array name="parts_number_selection">
         <item>2</item>
         <item>3</item>
