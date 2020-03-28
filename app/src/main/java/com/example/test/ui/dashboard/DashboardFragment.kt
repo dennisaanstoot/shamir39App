@@ -28,10 +28,6 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         this.root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-//        val textView: TextView = this.root.findViewById(R.id.text_dashboard)
-//        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
 
         // bind calculate_parts() method to button click event
         val calculatePartsButton : Button = this.root.findViewById(R.id.calculate_parts_button)

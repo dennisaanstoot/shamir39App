@@ -25,10 +25,6 @@ class NotificationsFragment : Fragment() {
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         this.root = inflater.inflate(R.layout.fragment_notifications, container, false)
-//        val textView: TextView = this.root.findViewById(R.id.text_notifications)
-//        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
 
         // bind calculate_seeds() method to button click event
         val calculateSeedButton : Button = this.root.findViewById(R.id.calculate_seed_button)
