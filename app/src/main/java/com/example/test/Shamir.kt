@@ -87,6 +87,10 @@ class Shamir {
         // convert parts to hex
         val hexParts = ArrayList<String>()
         var requiredParts = -1
+        // possible fix for indexOutOfBounds exception
+//        for (i in 0 until parts.size)
+//            hexParts.add("");
+
         for (i in 0 until parts.size) {
             val words = parts[i]
             // validate version
