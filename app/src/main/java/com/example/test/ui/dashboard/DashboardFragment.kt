@@ -68,9 +68,12 @@ class DashboardFragment : Fragment() {
 
     // calculate Shamir parts based on seed
     private fun calculate_parts() {
+        // init classes
         val support = ShamirSupport()
         val shamir = Shamir()
-        var parts: List<Array<String>>? = null
+
+        // result containers
+        var result: List<Array<String>>? = null
         var error: String? = null
         val resultsContainer: EditText = this.root.findViewById(R.id.partsView);
 
@@ -95,18 +98,18 @@ class DashboardFragment : Fragment() {
         if (error == null) {
             try {
                 shamir.init(support.initBitsValue)
-                parts = shamir.split(seed, support.wordlist, numberReconstructionParts, numberParts)
+                result = shamir.split(seed, support.wordlist, numberReconstructionParts, numberParts)
             } catch (e: IllegalStateException) {
                 error = e.message
             }
         }
 
         // display results
-        if (parts != null && error == null) {
-            for (part in parts)
+        if (result != null && error == null) {
+            for (part in result)
                 println(part.joinToString(separator = " "))
 
-            resultsContainer.setText(parts.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
+            resultsContainer.setText(result.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
             resultsContainer.setTextColor(Color.parseColor("#000000")) // regular color
 
         // error handling
