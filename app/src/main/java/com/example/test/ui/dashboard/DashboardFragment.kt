@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.test.R
 import com.example.test.Shamir
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import java.util.*
 
 class DashboardFragment : Fragment() {
 
@@ -78,6 +79,12 @@ class DashboardFragment : Fragment() {
         val parts: List<Array<String>> = shamir.split(bip39, wordlist, 3, 5)
 //        var parts : List<String> = shamir.share("seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture", 5, 3, 0, false)
 
-        println(parts)
+        for (part in parts)
+            println(Arrays.toString(part))
+
+        val partsView : TextView = this.root.findViewById(R.id.partsView);
+
+        partsView.setText(parts.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
+
     }
 }

@@ -65,4 +65,9 @@
         android:text="@string/calculate_parts"
         android:id="@+id/calculate_parts_button"/>
 
+    <TextView
+        android:id="@+id/partsView"
+        android:layout_width="match_parent"
+        android:layout_height="402dp" />
+
 </LinearLayout>
