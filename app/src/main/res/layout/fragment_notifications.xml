@@ -23,4 +23,12 @@
         android:layout_height="wrap_content"
         android:text="@string/calculate_seed"
         android:id="@+id/calculate_seed_button"  />
+
+    <EditText
+        android:id="@+id/seedView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:focusable="true"
+        android:textIsSelectable="true" />
 </LinearLayout>

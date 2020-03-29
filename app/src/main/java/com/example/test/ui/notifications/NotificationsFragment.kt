@@ -50,6 +50,9 @@ class NotificationsFragment : Fragment() {
         println(originalSeed)
         // original seed is supposed to be support.testData.seed: seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture
 
+        // set result to view
+        this.root.findViewById<EditText>(R.id.seedView).setText("Seed result")
+
     }
 
 }

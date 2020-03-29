@@ -72,6 +72,6 @@
         android:layout_height="wrap_content"
         android:editable="false"
         android:focusable="true"
-        android:textIsSelectable="true"/>
+        android:textIsSelectable="true" />
 
 </LinearLayout>

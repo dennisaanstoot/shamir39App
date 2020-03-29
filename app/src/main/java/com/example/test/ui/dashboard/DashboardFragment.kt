@@ -81,7 +81,7 @@ class DashboardFragment : Fragment() {
         for (part in parts)
             println(part.joinToString(separator = " "))
 
-        val partsView : TextView = this.root.findViewById(R.id.partsView);
+        val partsView : EditText = this.root.findViewById(R.id.partsView);
 
         partsView.setText(parts.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
 
