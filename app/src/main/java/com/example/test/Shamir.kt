@@ -345,8 +345,7 @@ class Shamir {
                 str += padLeft(arr[i].toString(2), size)
                 i++
             }
-            // TODO: fix error, startIndex cannot be a negative value
-            str = str.substring(-bits)
+            str = str.substring(0, str.length - bits)
             if (str.all { c -> c == '0' }) { // all zeros?
                 return null
             } else {
@@ -380,7 +379,7 @@ class Shamir {
     // Called when Math.random() is being used.
     fun warn() {
         println(Defaults.warning)
-        Exception("Warning triggered").printStackTrace()
+//        Exception("Warning triggered").printStackTrace()
 //        window['console']['warn'](defaults.warning);
 //        if (typeof window['alert'] === 'function' && config.alert){
 //            window['alert'](defaults.warning);
@@ -651,7 +650,7 @@ class Shamir {
 
     fun pow(x: Int, p: Int): Int {
         var retval = 1
-        for (i in 0 until p) {
+        for (i in 1 until p) {
             retval *= x
         }
         return retval
