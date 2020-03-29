@@ -345,7 +345,7 @@ class Shamir {
                 str += padLeft(arr[i].toString(2), size)
                 i++
             }
-            str = str.substring(0, str.length - bits)
+            str = str.substring(str.length - bits)
             if (str.all { c -> c == '0' }) { // all zeros?
                 return null
             } else {
@@ -360,7 +360,7 @@ class Shamir {
         warn()
 
         val bitsPerNum = 32
-        val max = pow(2, bitsPerNum) - 1
+        val max = Integer.MAX_VALUE
         return { bits: Int ->
             val elems = Math.ceil(bits / bitsPerNum.toDouble()).toInt()
             val arr = Array(elems) { 0 }
@@ -465,7 +465,7 @@ class Shamir {
         val newSecretList = split(newSecret, padLength)
         val x: MutableList<String> = ArrayList(newSecretList.map { it.toString() })
         val y: Array<String?> = Array(numShares) { null }
-        val len = newSecret.length
+        val len = newSecretList.size
         for (i in 0 until len) {
             val subShares = _getShares(newSecretList[i], numShares, threshold)
             for (j in 0 until numShares) {
@@ -499,11 +499,11 @@ class Shamir {
         val coeffs = mutableListOf(secret)
 
         for (i in 1 until threshold) {
-            coeffs[i] = parseInt(Config.rng!!.invoke(Config.bits!!), 2)
+            coeffs.add(parseInt(Config.rng!!.invoke(Config.bits!!), 2))
         }
         val len = numShares + 1
         for (i in 1 until len) {
-            shares[i - 1] = PointShare(i, horner(i, coeffs))
+            shares.add(PointShare(i, horner(i, coeffs)))
         }
         return shares
     }
@@ -524,7 +524,7 @@ class Shamir {
                 fx = coeffs[i]
                 continue
             }
-            fx = pow(Config.exps[(logx + Config.logs[fx]) % Config.max!!], coeffs[i])
+            fx = Config.exps[(logx + Config.logs[fx]) % Config.max!!] xor coeffs[i]
             i--
         }
         return fx
@@ -544,7 +544,7 @@ class Shamir {
 
         val bits = Config.bits!!
 
-        val max = pow(2, bits) - 1
+        val max = Integer.MAX_VALUE
         var idLength = max.toString(Config.radix!!).length
 
         val id = share.id
@@ -634,26 +634,14 @@ class Shamir {
                     break
                 }
                 product =
-                    (product + Config.logs[pow(at, x[j])] - Config.logs[pow(
-                        x[i],
-                        x[j]
-                    )] + Config.max!!/* to make sure it's not negative */) % Config.max!!
+                    (product + Config.logs[at xor x[j]] - Config.logs[x[i] xor x[j]] + Config.max!!
+                            /* to make sure it's not negative */) % Config.max!!
             }
 
-            sum = if (product == -1) sum else pow(
-                sum,
-                Config.exps[product].toInt()
-            ) // though exps[-1]= undefined and undefined ^ anything = anything in chrome, this behavior may not hold everywhere, so do the check
+            sum = if (product == -1) sum else sum xor Config.exps[product]
+            // though exps[-1]= undefined and undefined ^ anything = anything in chrome, this behavior may not hold everywhere, so do the check
         }
         return sum
-    }
-
-    fun pow(x: Int, p: Int): Int {
-        var retval = 1
-        for (i in 1 until p) {
-            retval *= x
-        }
-        return retval
     }
 
     // Splits a number string `bits`-length segments, after first
