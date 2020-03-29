@@ -664,7 +664,7 @@ class Shamir {
     // i.e. parts[0] represents the right-most `bits`-length segment of the input string.
     fun split(str: String, padLength: Int?): List<Int> {
         var newStr = str
-        if (padLength != null) {
+        if (padLength != null && padLength != 0) {
             newStr = padLeft(str, padLength)
         }
         val parts = ArrayList<Int>()
@@ -681,9 +681,6 @@ class Shamir {
     // Pads a string `str` with zeros on the left so that its length is a multiple of `bits`
     fun padLeft(str: String, bits: Int?): String {
         val newBits = (bits ?: Config.bits)!!
-//        // TODO: possible fix for divide by zero error.
-//        if (newBits == 0)
-//            return str;
         val missing = str.length % newBits
         return (if (missing != 0) (0 until (newBits - missing + 1)).map { i -> "0" }
             .joinToString(separator = "") else "") + str
