@@ -50,4 +50,11 @@ class ShamirSupport {
         }
         return true
     }
+
+    fun convertStringToList(string: String) : List<String> {
+        return string.trim().split(" ")
+    }
+    fun convertListToString(list : List<String>) : String {
+        return list.joinToString(separator=" ")
+    }
 }

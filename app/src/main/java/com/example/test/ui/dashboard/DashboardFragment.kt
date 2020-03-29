@@ -66,17 +66,21 @@ class DashboardFragment : Fragment() {
 
     // calculate Shamir parts based on seed
     private fun calculate_parts() {
-        println("Calculate parts");
-        val seedText : EditText = this.root.findViewById(R.id.seedText);
-        println(seedText.text)
+        val support = ShamirSupport()
+
+        // get user-provided input
+        val seedView : EditText = this.root.findViewById(R.id.seedText);
+        val seed : List<String> = support.convertStringToList(seedView.text.toString());
+
+        val numberPartsSpinner : Spinner = this.root.findViewById(R.id.spinner_number_parts)
+        val numberReconstructionPartsSpinner : Spinner = this.root.findViewById(R.id.spinner_number_reconstruct_parts)
+        val numberParts : Int = numberPartsSpinner.selectedItem.toString().toInt()
+        val numberReconstructionParts : Int = numberReconstructionPartsSpinner.selectedItem.toString().toInt()
 
         // attempt to generate Shamir parts
-        // example to be verified at https://iancoleman.io/shamir39/#english
         val shamir = Shamir()
-        val support = ShamirSupport()
         shamir.init(support.initBitsValue)
-        val parts: List<Array<String>> = shamir.split(support.testData.seed, support.wordlist, support.testData.partsRequiredForReconstruction, support.testData.numberOfParts)
-//        var parts : List<String> = shamir.share("seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture", 5, 3, 0, false)
+        val parts: List<Array<String>> = shamir.split(seed, support.wordlist, numberReconstructionParts, numberParts)
 
         for (part in parts)
             println(part.joinToString(separator = " "))
