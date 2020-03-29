@@ -522,6 +522,7 @@ class Shamir {
         while (i >= 0) {
             if (fx == 0) {
                 fx = coeffs[i]
+                i--
                 continue
             }
             fx = Config.exps[(logx + Config.logs[fx]) % Config.max!!] xor coeffs[i]
