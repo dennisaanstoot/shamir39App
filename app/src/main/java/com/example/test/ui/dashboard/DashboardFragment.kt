@@ -79,7 +79,7 @@ class DashboardFragment : Fragment() {
 //        var parts : List<String> = shamir.share("seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture", 5, 3, 0, false)
 
         for (part in parts)
-            println(Arrays.toString(part))
+            println(part.joinToString(separator = " "))
 
         val partsView : TextView = this.root.findViewById(R.id.partsView);
 

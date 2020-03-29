@@ -463,7 +463,7 @@ class Shamir {
         val newSecret =
             '1' + hex2bin(secret) // append a 1 so that we can preserve the correct number of leading zeros in our secret
         val newSecretList = split(newSecret, padLength)
-        val x: MutableList<String> = ArrayList(newSecretList.map { it.toString() })
+        val x: MutableList<String?> = Array<String?>(numShares) { null }.toMutableList()
         val y: Array<String?> = Array(numShares) { null }
         val len = newSecretList.size
         for (i in 0 until len) {
@@ -481,13 +481,13 @@ class Shamir {
         } else {
             for (i in 0 until numShares) {
                 x[i] = Config.bits!!.toString(36).toUpperCase() + padLeft(
-                    x[i],
+                    x[i]!!,
                     padding
                 ) + bin2hex(y[i]!!)
             }
         }
 
-        return x
+        return x.filterNotNull()
     }
 
     // This is the basic polynomial generation and evaluation function
@@ -652,24 +652,24 @@ class Shamir {
     fun split(str: String, padLength: Int?): List<Int> {
         var newStr = str
         if (padLength != null && padLength != 0) {
-            newStr = padLeft(str, padLength)
+            newStr = padLeft(newStr, padLength)
         }
         val parts = ArrayList<Int>()
         var i = newStr.length
         val bits = Config.bits!!
         while (i > bits) {
-            parts.add(parseInt(str.slice(i - bits until i), 2))
+            parts.add(parseInt(newStr.slice(i - bits until i), 2))
             i -= bits
         }
-        parts.add(parseInt(str.slice(0 until i), 2))
+        parts.add(parseInt(newStr.slice(0 until i), 2))
         return parts
     }
 
     // Pads a string `str` with zeros on the left so that its length is a multiple of `bits`
     fun padLeft(str: String, bits: Int?): String {
-        val newBits = (bits ?: Config.bits)!!
+        val newBits = bits ?: Config.bits!!
         val missing = str.length % newBits
-        return (if (missing != 0) (0 until (newBits - missing + 1)).map { i -> "0" }
+        return (if (missing != 0) Array(newBits - missing ){'0'}
             .joinToString(separator = "") else "") + str
     }
 
