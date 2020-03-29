@@ -1,18 +1,20 @@
 package com.example.test.ui.dashboard
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.test.R
 import com.example.test.Shamir
 import com.example.test.ShamirSupport
-import kotlinx.android.synthetic.main.fragment_dashboard.*
-import java.util.*
+import java.lang.IllegalStateException
 
 class DashboardFragment : Fragment() {
 
@@ -67,27 +69,52 @@ class DashboardFragment : Fragment() {
     // calculate Shamir parts based on seed
     private fun calculate_parts() {
         val support = ShamirSupport()
+        val shamir = Shamir()
+        var parts: List<Array<String>>? = null
+        var error: String? = null
+        val resultsContainer: EditText = this.root.findViewById(R.id.partsView);
 
         // get user-provided input
-        val seedView : EditText = this.root.findViewById(R.id.seedText);
-        val seed : List<String> = support.convertStringToList(seedView.text.toString());
+        val seedView: EditText = this.root.findViewById(R.id.seedText);
+        val seed: List<String> = support.convertStringToList(seedView.text.toString());
 
-        val numberPartsSpinner : Spinner = this.root.findViewById(R.id.spinner_number_parts)
-        val numberReconstructionPartsSpinner : Spinner = this.root.findViewById(R.id.spinner_number_reconstruct_parts)
-        val numberParts : Int = numberPartsSpinner.selectedItem.toString().toInt()
-        val numberReconstructionParts : Int = numberReconstructionPartsSpinner.selectedItem.toString().toInt()
+        val numberPartsSpinner: Spinner = this.root.findViewById(R.id.spinner_number_parts)
+        val numberReconstructionPartsSpinner: Spinner =
+            this.root.findViewById(R.id.spinner_number_reconstruct_parts)
+        val numberParts: Int = numberPartsSpinner.selectedItem.toString().toInt()
+        val numberReconstructionParts: Int =
+            numberReconstructionPartsSpinner.selectedItem.toString().toInt()
+
+        // verify values
+        if (numberReconstructionParts > numberParts) {
+            error =
+                "The amount of parts necessary for reconstruction cannot be higher then the total number of parts"
+        }
 
         // attempt to generate Shamir parts
-        val shamir = Shamir()
-        shamir.init(support.initBitsValue)
-        val parts: List<Array<String>> = shamir.split(seed, support.wordlist, numberReconstructionParts, numberParts)
+        if (error == null) {
+            try {
+                shamir.init(support.initBitsValue)
+                parts = shamir.split(seed, support.wordlist, numberReconstructionParts, numberParts)
+            } catch (e: IllegalStateException) {
+                error = e.message
+            }
+        }
 
-        for (part in parts)
-            println(part.joinToString(separator = " "))
+        // display results
+        if (parts != null && error == null) {
+            for (part in parts)
+                println(part.joinToString(separator = " "))
 
-        val partsView : EditText = this.root.findViewById(R.id.partsView);
+            resultsContainer.setText(parts.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
+            resultsContainer.setTextColor(Color.parseColor("#000000")) // regular color
 
-        partsView.setText(parts.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
+        // error handling
+        } else {
+            resultsContainer.setText("Error: " + error)
+            resultsContainer.setTextColor(Color.parseColor("#FF0000")) // error color
+        }
 
     }
+
 }
