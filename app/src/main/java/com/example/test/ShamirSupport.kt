@@ -39,6 +39,10 @@ class ShamirSupport {
     }
     fun partsInWordlist(words : List<List<String>>) : Boolean {
         for (i in 0 until words.size) {
+            // ignore empty 'parts'
+            if (words[i].size == 0 || (words[i].size == 1 && words[i][0] == ""))
+                continue
+
             // cutoff shamir version from every part
             if (words[i][0] != this.shamirVersion)
                 return false;
@@ -51,13 +55,13 @@ class ShamirSupport {
     }
 
     fun convertStringToList(string: String) : List<String> {
-        return string.trim().split(" ")
+        return string.trim().replace(" +".toRegex(), " ").split(" ")
     }
     fun convertListToString(list : List<String>) : String {
         return list.joinToString(separator=" ")
     }
     fun convertPartsStringToList(string: String) : List<List<String>> {
-        return string.split("\n").map { p -> this.convertStringToList(p) }
+        return string.trim().replace("\n+".toRegex(), "\n").split("\n").map { p -> this.convertStringToList(p) }
     }
     fun convertPartsListToString(list : List<Array<String>>) : String {
         return list.map { p -> p.joinToString(separator=" ") }.joinToString(separator = "\n")
