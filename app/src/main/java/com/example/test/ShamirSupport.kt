@@ -57,4 +57,10 @@ class ShamirSupport {
     fun convertListToString(list : List<String>) : String {
         return list.joinToString(separator=" ")
     }
+    fun convertPartsStringToList(string: String) : List<List<String>> {
+        return string.split("\n").map { p -> this.convertStringToList(p) }
+    }
+    fun convertPartsListToString(list : List<List<String>>) : String {
+        return list.map { p -> p.joinToString(separator=" ") }.joinToString(separator = "\n")
+    }
 }
