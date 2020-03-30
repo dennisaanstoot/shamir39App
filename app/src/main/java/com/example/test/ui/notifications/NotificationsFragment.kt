@@ -46,12 +46,12 @@ class NotificationsFragment : Fragment() {
         val support = ShamirSupport()
         shamir.init(support.initBitsValue)
 
-        val originalSeed : List<String> = shamir.combine(support.testData.parts, support.wordlist)
-        println(originalSeed)
+        val seed : List<String> = shamir.combine(support.testData.parts, support.wordlist)
+        println(seed)
         // original seed is supposed to be support.testData.seed: seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture
 
         // set result to view
-        this.root.findViewById<EditText>(R.id.seedView).setText("Seed result")
+        this.root.findViewById<EditText>(R.id.seedView).setText(support.convertListToString(seed))
 
     }
 

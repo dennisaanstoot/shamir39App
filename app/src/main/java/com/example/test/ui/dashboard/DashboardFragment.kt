@@ -109,7 +109,7 @@ class DashboardFragment : Fragment() {
             for (part in result)
                 println(part.joinToString(separator = " "))
 
-            resultsContainer.setText(result.map { p -> p.joinToString(separator = " ") }.joinToString(separator = "\n"))
+            resultsContainer.setText(support.convertPartsListToString(result))
             resultsContainer.setTextColor(Color.parseColor("#000000")) // regular color
 
         // error handling

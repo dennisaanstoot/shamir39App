@@ -10,14 +10,13 @@ class ShamirSupport {
 
     // test data to be used to verify shamir-class functions
     inner class TestData {
-        val seed : List<String> = listOf("seek", "deposit", "organ", "vintage", "absurd", "daughter", "trip", "rabbit", "simple", "father", "effort", "welcome", "fashion", "bike", "venture")
-        val parts: List<List<String>> = listOf(
-            listOf("shamir39-p1", "army", "release", "feel", "view", "toast", "hungry", "gasp", "auction", "antique", "sugar", "aunt", "route", "area", "patient", "fatal", "fiber", "turtle"),
-            listOf("shamir39-p1", "around", "report", "popular", "hospital", "gospel", "yellow", "wrist", "accident", "embody", "tattoo", "office", "embark", "spring", "vocal", "deliver", "chicken", "club"),
-            listOf("shamir39-p1", "arrange", "actress", "divide", "pink", "brick", "good", "palm", "debate", "power", "repeat", "garlic", "polar", "paddle", "public", "depart", "goddess", "cruel"),
-            listOf("shamir39-p1", "arrest", "bean", "album", "matrix", "inject", "blast", "armor", "endless", "calm", "nasty", "bread", "immense", "favorite", "bamboo", "carbon", "purpose", "viable"),
-            listOf("shamir39-p1", "arrive", "police", "mutual", "dove", "arena", "metal", "hello", "identify", "script", "wink", "tag", "pact", "boring", "engage", "cargo", "unknown", "typical")
-        )
+        val seed : List<String> = convertStringToList("seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture")
+        val parts: List<List<String>> = convertPartsStringToList("shamir39-p1 army issue want huge snack actor either swarm blind general weasel hand detail city grief setup arrest\n" +
+                "shamir39-p1 around hunt inject liberty same weapon result mouse level ritual supreme team dog shoe crack retire between\n" +
+                "shamir39-p1 arrange boat draft stem usage attract vault lab leisure heavy trick total denial bind advice grab twist\n" +
+                "shamir39-p1 arrest submit tent auction summer head mango loan girl arctic child pony loyal welcome rather easily eye\n" +
+                "shamir39-p1 arrive quick turkey forget marriage orient scorpion hurry outer swift biology orient wrist city maple now pyramid")
+
         val numberOfParts : Int = 5
         val partsRequiredForReconstruction : Int = 3
 
@@ -60,7 +59,7 @@ class ShamirSupport {
     fun convertPartsStringToList(string: String) : List<List<String>> {
         return string.split("\n").map { p -> this.convertStringToList(p) }
     }
-    fun convertPartsListToString(list : List<List<String>>) : String {
+    fun convertPartsListToString(list : List<Array<String>>) : String {
         return list.map { p -> p.joinToString(separator=" ") }.joinToString(separator = "\n")
     }
 }
