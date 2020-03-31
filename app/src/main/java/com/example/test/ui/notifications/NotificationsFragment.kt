@@ -1,5 +1,6 @@
 package com.example.test.ui.notifications
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,20 +38,39 @@ class NotificationsFragment : Fragment() {
 
     // calculate BIP39 mnemonic seed based on Shamir parts
     private fun calculateSeed() {
-        println("Calculate seed");
-        val partsText : EditText = this.root.findViewById(R.id.partsText);
-        println(partsText.text)
-
-        // test Shamir combine function
+        // init classes
         val shamir = Shamir()
-        shamir.init(ShamirSupport.initBitsValue)
 
-        val seed : List<String> = shamir.combine(ShamirSupport.TestData.parts, ShamirSupport.wordlist)
-        println(seed)
-        // original seed is supposed to be support.testData.seed: seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture
+        // result containers
+        var result : List<String>? = null
+        var error: String? = null
+        val resultsContainer: EditText = this.root.findViewById(R.id.seedView);
 
-        // set result to view
-        this.root.findViewById<EditText>(R.id.seedView).setText(ShamirSupport.convertListToString(seed))
+        // get user-provided input
+        val partsText : EditText = this.root.findViewById(R.id.partsText);
+        val parts : List<List<String>> = ShamirSupport.convertPartsStringToList(partsText.text.toString())
+
+        // combine shamir parts
+        if (error == null) {
+            try {
+                shamir.init(ShamirSupport.initBitsValue)
+                result = shamir.combine(parts, ShamirSupport.wordlist)
+            } catch(e: IllegalStateException) {
+                error = e.message
+            }
+        }
+
+        // display results
+        if (result != null && error == null) {
+            println(result)
+            resultsContainer.setText(ShamirSupport.convertListToString(result))
+            resultsContainer.setTextColor(Color.parseColor("#000000")) // regular color
+
+        // display error
+        } else {
+            resultsContainer.setText("Error: " + error)
+            resultsContainer.setTextColor(Color.parseColor("#FF0000")) // error color
+        }
 
     }
 
