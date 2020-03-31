@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.test.R
 import com.example.test.Shamir
 import com.example.test.ShamirSupport
-import java.lang.IllegalStateException
 
 class DashboardFragment : Fragment() {
 
@@ -35,7 +34,7 @@ class DashboardFragment : Fragment() {
 
         // bind calculate_parts() method to button click event
         val calculatePartsButton : Button = this.root.findViewById(R.id.calculate_parts_button)
-        calculatePartsButton.setOnClickListener { calculate_parts() }
+        calculatePartsButton.setOnClickListener { calculateParts() }
 
         // dropdown spinner: total number of parts
         val numberPartsSpinner : Spinner = this.root.findViewById(R.id.spinner_number_parts)
@@ -67,9 +66,8 @@ class DashboardFragment : Fragment() {
     }
 
     // calculate Shamir parts based on seed
-    private fun calculate_parts() {
+    private fun calculateParts() {
         // init classes
-        val support = ShamirSupport()
         val shamir = Shamir()
 
         // result containers
@@ -79,7 +77,7 @@ class DashboardFragment : Fragment() {
 
         // get user-provided input
         val seedView: EditText = this.root.findViewById(R.id.seedText);
-        val seed: List<String> = support.convertStringToList(seedView.text.toString());
+        val seed: List<String> = ShamirSupport.convertStringToList(seedView.text.toString());
 
         val numberPartsSpinner: Spinner = this.root.findViewById(R.id.spinner_number_parts)
         val numberReconstructionPartsSpinner: Spinner =
@@ -97,8 +95,8 @@ class DashboardFragment : Fragment() {
         // attempt to generate Shamir parts
         if (error == null) {
             try {
-                shamir.init(support.initBitsValue)
-                result = shamir.split(seed, support.wordlist, numberReconstructionParts, numberParts)
+                shamir.init(ShamirSupport.initBitsValue)
+                result = shamir.split(seed, ShamirSupport.wordlist, numberReconstructionParts, numberParts)
             } catch (e: IllegalStateException) {
                 error = e.message
             }
@@ -109,7 +107,7 @@ class DashboardFragment : Fragment() {
             for (part in result)
                 println(part.joinToString(separator = " "))
 
-            resultsContainer.setText(support.convertPartsListToString(result))
+            resultsContainer.setText(ShamirSupport.convertPartsListToString(result))
             resultsContainer.setTextColor(Color.parseColor("#000000")) // regular color
 
         // error handling

@@ -43,15 +43,14 @@ class NotificationsFragment : Fragment() {
 
         // test Shamir combine function
         val shamir = Shamir()
-        val support = ShamirSupport()
-        shamir.init(support.initBitsValue)
+        shamir.init(ShamirSupport.initBitsValue)
 
-        val seed : List<String> = shamir.combine(support.testData.parts, support.wordlist)
+        val seed : List<String> = shamir.combine(ShamirSupport.TestData.parts, ShamirSupport.wordlist)
         println(seed)
         // original seed is supposed to be support.testData.seed: seek deposit organ vintage absurd daughter trip rabbit simple father effort welcome fashion bike venture
 
         // set result to view
-        this.root.findViewById<EditText>(R.id.seedView).setText(support.convertListToString(seed))
+        this.root.findViewById<EditText>(R.id.seedView).setText(ShamirSupport.convertListToString(seed))
 
     }
 

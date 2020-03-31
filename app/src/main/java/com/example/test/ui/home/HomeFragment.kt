@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.test.R
 
-import com.example.test.Shamir
-
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
