@@ -30,13 +30,13 @@ class NotificationsFragment : Fragment() {
 
         // bind calculate_seeds() method to button click event
         val calculateSeedButton : Button = this.root.findViewById(R.id.calculate_seed_button)
-        calculateSeedButton.setOnClickListener { calculate_seed() }
+        calculateSeedButton.setOnClickListener { calculateSeed() }
 
         return this.root
     }
 
     // calculate BIP39 mnemonic seed based on Shamir parts
-    private fun calculate_seed() {
+    private fun calculateSeed() {
         println("Calculate seed");
         val partsText : EditText = this.root.findViewById(R.id.partsText);
         println(partsText.text)
