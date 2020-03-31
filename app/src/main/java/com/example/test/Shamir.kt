@@ -85,7 +85,7 @@ class Shamir {
     // Combines Shamir39 mnemonics into a BIP39 mnemonic
     fun combine(parts: List<List<String>>, wordlist: List<String>): List<String> {
         // convert parts to hex
-        val hexParts = ArrayList<String>()
+        val hexParts = Array<String?>(parts.size) {null}
         var requiredParts = -1
         // possible fix for indexOutOfBounds exception
 //        for (i in 0 until parts.size)
@@ -148,7 +148,7 @@ class Shamir {
         val partsClean = ArrayList<Share>()
         for (i in 0 until hexParts.size) {
             if (hexParts[i] != null) {
-                val partClean = Share(null, i+1, hexParts[i])
+                val partClean = Share(null, i+1, hexParts[i]!!)
                 partsClean.add(partClean)
             }
         }
@@ -568,7 +568,7 @@ class Shamir {
         var setBits: Int? = null
         var share: Share
         val x = ArrayList<Int>()
-        val y = ArrayList<ArrayList<Int>?>()
+        val y = HashMap<Int, HashMap<Int, Int>?>()
         var result = ""
         var idx: Int
         var len = shares.size
@@ -592,20 +592,20 @@ class Shamir {
             val shareArr = split(hex2bin(share.value), null)
             val len2 = shareArr.size
             for (j in 0 until len2) {
-                y[j] = if (y[j] != null) y[j] else ArrayList()
+                y[j] = if (y[j] != null) y[j] else HashMap()
                 y[j]!![idx] = shareArr[j]
             }
         }
         len = y.size
         for (i in 0 until len) {
             val x1 = x.toTypedArray()
-            val y1 = y[i]!!.toTypedArray()
+            val y1 = y[i]!!.values.toTypedArray()
             result = padLeft(lagrange(at, x1, y1).toString(2), null) + result
         }
 
         if (at == 0) {// reconstructing the secret
             idx = result.indexOf('1') //find the first 1
-            return bin2hex(result.slice(0 until idx + 1))
+            return bin2hex(result.slice(idx + 1 until result.length))
         } else {// generating a new share
             return bin2hex(result)
         }
